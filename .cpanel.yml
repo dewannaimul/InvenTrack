@@ -1,12 +1,11 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/premakkt/inventory.devdesigngrow.com/
-    - /bin/cp -R * $DEPLOYPATH
-    - cd $DEPLOYPATH && /home/premakkt/bin/composer install --no-dev --optimize-autoloader --no-interaction
-    - cd $DEPLOYPATH && php artisan migrate --force
-    - cd $DEPLOYPATH && (php artisan storage:link || true)
-    - cd $DEPLOYPATH && php artisan config:clear
-    - cd $DEPLOYPATH && php artisan config:cache
-    - cd $DEPLOYPATH && php artisan route:cache
-    - cd $DEPLOYPATH && php artisan view:cache
-    - cd $DEPLOYPATH && chmod -R 775 storage bootstrap/cache
+    - /home/premakkt/bin/composer install --no-dev --optimize-autoloader --no-interaction --working-dir=$DEPLOYPATH
+    - php $DEPLOYPATH/artisan migrate --force
+    - (php $DEPLOYPATH/artisan storage:link || true)
+    - php $DEPLOYPATH/artisan config:clear
+    - php $DEPLOYPATH/artisan config:cache
+    - php $DEPLOYPATH/artisan route:cache
+    - php $DEPLOYPATH/artisan view:cache
+    - chmod -R 775 $DEPLOYPATH/storage $DEPLOYPATH/bootstrap/cache
